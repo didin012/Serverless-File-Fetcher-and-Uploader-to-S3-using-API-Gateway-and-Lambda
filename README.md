@@ -39,7 +39,6 @@ def lambda_handler(event, context):
     s3_upload = s3.put_object( Bucket="<bucketname>", Key='content1.pdf', Body = decode_content)
     
     return {
-        
         'statusCode': 200,
         'body': json.dumps("Hello Lambda!")
     }'
