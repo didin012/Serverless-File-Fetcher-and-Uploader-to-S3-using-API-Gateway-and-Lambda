@@ -26,6 +26,7 @@
 6.      Go to **Code Source** tab then copy the code below.
 
 {{{
+
 import json
 import base64
 import boto3
@@ -43,6 +44,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps("Hello Lambda!")
     }
+    
 }}}
 
 3.	In the code above please change the //**<bucketname>**// to the name of your bucket you created earlier.
