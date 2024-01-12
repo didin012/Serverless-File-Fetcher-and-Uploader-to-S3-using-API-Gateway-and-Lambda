@@ -5,7 +5,7 @@
 3.	Click on **Create Role**
 4.	Choose **Lambda** for the Service or use case then click **Next**
 
-![image](https://github.com/didin012/AWS-Cloud-Projects/assets/104528282/84173351-2173-4e39-bcf5-431ce9c8eb96)
+![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/6569bbb6-cbec-40df-9867-43054bcf48ae)
 
 5.	On Add Permissions, search up for **AWSLambdaExecute** then click the checkbox and proceed to next.
 6.	Give it a Role name of **lambda-api-gateway-role** then click **Create Role**.
