@@ -25,7 +25,8 @@
 5.	Then Click **Create Function**
 6.  Go to **Code Source** tab then copy the code below.
 
-'import json
+'
+import json
 import base64
 import boto3
 
