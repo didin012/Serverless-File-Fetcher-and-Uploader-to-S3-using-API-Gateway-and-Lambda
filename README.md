@@ -23,7 +23,7 @@
 3.	For Permissions choose Change default execution role then click **Use an existing role** on Execution role
 4.	Under existing role, choose the role that we created earlier, **lambda-api-gateway-role**
 5.	Then Click **Create Function**
-6.      Go to **Code Source** tab then copy the code below.
+6.  Go to **Code Source** tab then copy the code below.
 
 {{{
 
