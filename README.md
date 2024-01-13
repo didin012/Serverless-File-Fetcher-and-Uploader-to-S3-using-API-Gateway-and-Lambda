@@ -105,7 +105,7 @@ def lambda_handler(event, context):
 
 ![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/a7bb8502-4440-4d76-bb84-c53bdb424334)
 
-# Fetching the pdf file from S3 using AWS Lambda and API Gateway
+# Fetching the pdf file from S3 using AWS Lambda and API Gateway Serverless Framework
 
 ## AWS Lambda
 
