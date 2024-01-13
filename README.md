@@ -107,7 +107,7 @@ def lambda_handler(event, context):
 
 ## End of First Part
 
-# Fetching the pdf file from S3 using AWS Lambda and API Gateway Serverless Framework
+# Serverless File Fetcher from S3 using AWS Lambda and API Gateway
 
 ## AWS Lambda
 
