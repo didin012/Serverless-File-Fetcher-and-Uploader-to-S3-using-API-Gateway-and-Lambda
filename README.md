@@ -1,7 +1,16 @@
 # Serverless File Uploader to S3 using API Gateway and Lambda
 ## Infrastructure
+This is the architecture we will build for this tutorial
 
-        **Still working on this**
+![image](https://github.com/didin012/Serverless-File-Fetcher-and-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/c8f29425-2b15-469f-984d-00eed1e31fe9)
+
+Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale. APIs act as the "front door" for applications to access data, business logic, or functionality from your backend services. API Gateway will serve as the entrance way for the user to upload and fetch the file by invoking our Lambda function to do the script in this project. We will create POST method for the upload then the GET method for the fetching of the file using the RESTAPI.
+
+Lambda runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, including server and operating system maintenance, capacity provisioning and automatic scaling, and logging. It will be the one decode and encode our file into base64 format then upload it in our S3 bucket.
+
+Amazon Simple Storage Service (Amazon S3) is an object storage service offering industry-leading scalability, data availability, security, and performance. This storage service is where the file will be stored.
+
+An IAM role is an IAM identity that you can create in your account that has specific permissions. On this tutorial, we will attach a IAM policy to this role then join this role to the Lambda function would have a permission to get and put object to the S3. 
 
 ## Create IAM Role
 1.	In the search bar on Management Console search for **AWS Identity and Access Management (IAM)**. Then click IAM.
