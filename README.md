@@ -1,4 +1,4 @@
-# Serverless File Uploader to S3 using API Gateway and Lambda
+![image](https://github.com/didin012/Serverless-File-Fetcher-and-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/eec9af26-6bb4-4a06-8d4a-4f539743eb30)# Serverless File Uploader to S3 using API Gateway and Lambda
 ## Infrastructure
 This is the architecture we will build for this tutorial
 
@@ -143,16 +143,25 @@ def lambda_handler(event, context):
     s3 = boto3.client("s3")
     print(event)
     
-    #Legacy Method
-    bucket_name = event["params"]['path']['bucket']
-    file_name = event['params']['querystring']['file']
+    #Proxy Integration Method
+    bucket_name = event["pathParameters"]['bucket']
+    file_name = event['queryStringParameters']['file']
     
-    #Fetching the object on S3
-    fileObj = s3.get_object(Bucket = <bucket_name>, Key = file_name)
+    fileObj = s3.get_object(Bucket = bucket_name, Key = file_name)
     file_content = fileObj["Body"].read()
-
-    #converting the file0bj back into pdf
-    return base64.b64encode(file_content)
+   
+    print(bucket_name, file_name)
+  
+    return {
+     "statusCode": 200,
+     "headers": {
+      "Content-Type": "*/*",
+     #attachment means automatic download, inline means view the file first before download#
+      "Content-Disposition": "attachment; filename={}".format(file_name)
+     },
+     "body": base64.b64encode(file_content),
+     "isBase64Encoded": True
+    }
 ```
 10.	Make sure the you have changed the ```<bucket_name>``` to the name of bucket you created earlier.
 11.	Hit Ctrl+S then click **Deploy**.
@@ -162,30 +171,19 @@ def lambda_handler(event, context):
 12.	Create new API click **BUILD** on REST API
 13.	Create Resource then name it ```{bucket}```
 14.	Click on ```/{bucket}``` then click **Create Method** then choose **GET** on Method Type, Integration Type is **Lambda Function** and choose the function we created on Lambda beside ```us-west-2```. After that click **Create Method **. The image below is for reference.
-
+15.	Make sure that you turned on the **Lambda Proxy Integrations**
+    
 ![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/4b412a4c-8e2d-4456-b48f-aa412eaad613)
 
-15.	Click Method Request then **Edit**
+17.	Click Method Request then **Edit**
 
 ![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/197c0613-2aba-435e-a8a8-f68e83e88935)
 
-16.	Under the Editing section, **copy the following inputs** based on the image below. Then click **Save**
+17.	Under the Editing section, **copy the following inputs** based on the image below. Then click **Save**
 
 ![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/fa4aaeac-da43-4345-9794-58d338a8a690)
 
-17.	Click **Edit** on Integration Request then once again **copy the information** below. **Take note**: Under Mapping templates, **Generating template**, the Method request passthrough should be able to generate its own Template Body. After this click **Save**.
-
-![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/e7986607-ad83-408a-8f4d-6f7be6be763a)
-
-18.	Click **Edit** on Method Response then **input the details below**. Then click **Save**.
-
-![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/8e5ea570-32a9-43de-b621-c67b28818968)
-
-19.	Click **Edit** on Integration Response then **input again the details** on the image below. Click **Save** after this.
-
-![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/35e10ea9-d13b-45f2-a41f-bdd67a601d96)
-
-20.	We can now deploy our API, now click **Deploy API**. Then select ```*No Stage*``` then type on the Stage Name, ```v1```.
+20.	We can now deploy our API, now click **Deploy API**. Then select ```*New Stage*``` then type on the Stage Name, ```v1```.
 
 ![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/dafbb0ca-fc11-4850-b1dc-03164c49f9f0)
 
@@ -214,12 +212,13 @@ def lambda_handler(event, context):
 1. From the Invoke URL link you copied, paste down that link to the search bar then add ```/{bucket}?file=content1.pdf``` at the end of the link. Note: {bucket} should have the name of the bucket you created earlier. For reference use the picture down below.
 2. Make sure the Method type is set to **GET**.
 3. For the Params, **follow** the format below
+4. Click the the arrow beside the Send then **Send and Download**. Make sure you have to add the ```.pdf``` on the end of the file name
    
-![image](https://github.com/didin012/Serverless-File-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/920a012d-0647-4064-a801-d36067d51290)
-
-4. Click **Send**
+![image](https://github.com/didin012/Serverless-File-Fetcher-and-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/9fdec127-7552-4e66-8c29-35bc6019ba2e)
 
 ### There you go, you have your file back to you!
 
-**Side Note:** you can save the pdf file by clicking the 3 … button beside **Save as example** then Save response file. New window will pop-up, find the directory you want to save the file then name it what you want and make sure to have ```.pdf``` on the end to be able to save it in a pdf format.
+**Side Note 1:** If you Send the file without downloading you will get a block of text response from POSTMAN. To be able to convert this text you can save the pdf file by clicking the **…** button beside **Save as example** then **Save response file**. New window will pop-up, find the directory you want to save the file then name it what you want and make sure to have ```.pdf``` on the end to be able to save it in a pdf format. 
+
+**Side Note 1:** If you want to view the PDF file before downloading when accessing the URL via browser, you can do it by going into Lambda. In the code, change the ```attachment``` to ```inline``` under the ```"Content-Disposition:``` key.
 
