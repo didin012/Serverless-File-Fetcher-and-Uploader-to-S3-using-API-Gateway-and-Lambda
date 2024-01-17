@@ -220,5 +220,5 @@ def lambda_handler(event, context):
 
 **Side Note 1:** If you Send the file without downloading you will get a block of text response from POSTMAN. To be able to convert this text you can save the pdf file by clicking the **…** button beside **Save as example** then **Save response file**. New window will pop-up, find the directory you want to save the file then name it what you want and make sure to have ```.pdf``` on the end to be able to save it in a pdf format. 
 
-**Side Note 1:** If you want to view the PDF file before downloading when accessing the URL via browser, you can do it by going into Lambda. In the code, change the ```attachment``` to ```inline``` under the ```"Content-Disposition:``` key.
+**Side Note 2:** If you want to view the PDF file before downloading when accessing the URL via browser, you can do it by going into Lambda. In the code, change the ```attachment``` to ```inline``` under the ```"Content-Disposition:``` key.
 
