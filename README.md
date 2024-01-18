@@ -1,4 +1,4 @@
-![image](https://github.com/didin012/Serverless-File-Fetcher-and-Uploader-to-S3-using-API-Gateway-and-Lambda/assets/104528282/eec9af26-6bb4-4a06-8d4a-4f539743eb30)# Serverless File Uploader to S3 using API Gateway and Lambda
+# Serverless File Uploader to S3 using API Gateway and Lambda
 ## Infrastructure
 This is the architecture we will build for this tutorial
 
